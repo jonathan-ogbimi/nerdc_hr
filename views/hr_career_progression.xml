@@ -1,0 +1,8 @@
+<odoo>
+    <report string="Career Progression" 
+        id="hr_employee_career_progression_report_xls" 
+        model="hr.employee" 
+        report_type="xlsx" 
+        name="nerdc_hr.report_career_progression" 
+        file="Careeer Progression" />
+</odoo>

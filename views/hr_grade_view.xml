@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_grade_form_expense" model="ir.ui.view">
+        <field name="name">hr.grade.form.expense</field>
+        <field name="model">hr.grade</field>
+        <field name="inherit_id" ref="hr_grade.view_grade_form"/>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="replace">
+                <form string="Grade">
+                    <group>
+                        <field name="name" />
+                        <field name="is_above_manager"/>
+                    </group>
+                    <group string="Related Jobs">
+                        <separator/>
+                        <field name="hr_job_ids" widget="many2many" nolabel="1" colspan="4">
+                            <field name="name"/>
+                            <field name="department_id"/>
+                        </field>
+                    </group>
+                    <groupstring="Related Expenses">
+                        <separator/>
+                        <field name="expense_product_ids" widget="many2many" nolabel="1" colspan="4">
+                            <field name="name"/>
+                        </field>
+                    </group>
+                    <group string="Related Leave Types">
+                        <separator/>
+                        <field name="leave_type_ids" widget="many2many" nolabel="1" colspan="4">
+                            <field name="name"/>
+                        </field>
+                    </group>
+                </form>
+            </xpath>
+        </field>
+    </record>
+</odoo>

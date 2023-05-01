@@ -1,0 +1,65 @@
+<odoo>
+    <!--Pension Matters -->
+    <record id="view_pfa_tree" model="ir.ui.view">
+        <field name="name">Pension Fund TTree</field>
+        <field name="model">hr.employee.pfa</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_open_pfa" model="ir.actions.act_window">
+        <field name="name">PFA</field>
+        <field name="res_model">hr.employee.pfa</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <record id="view_employee_pension_line_form" model="ir.ui.view">
+        <field name="name">Employee PFA Line</field>
+        <field name="model">hr.employee.pfa.line</field>
+        <field name="arch" type="xml">
+            <form class="o_form_document" delete="False">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="pfa_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="pfa_id"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="rsa_number"/>
+                            <field name="pension_category"/>
+                            <field name="employee_id" invisible="1" options="{'no_create': True,'no_edit':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="hr_employee_pfa_inherit_form_view">
+        <field name="name">hr.employee.pfa.form.view</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">300</field>
+        <field name="inherit_id" ref="hr_employee_updation.hr_employee_inherit_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page name="pension_matters" string="Pension Matters">
+                    <h1>
+                        <label for="pfa_line_ids" class="oe_edit_only"/>
+                    </h1>
+                    <field name="pfa_line_ids" string="Pension Administrators (PFA)" context="{'default_employee_id': id}">
+                        <tree string="Pension Fund Administrator">
+                            <field name="pfa_id" required="1"/>
+                            <field name="rsa_number" required="1"/>
+                            <field name="pension_category" required="1"/>
+                            <field name="employee_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <menuitem id="menu_hr_pfa" name="PFAs" action="action_open_pfa" parent="hr.menu_human_resources_configuration" sequence="14" groups="hr.group_hr_manager"/>
+</odoo>

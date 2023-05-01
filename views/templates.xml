@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <menuitem
+                id="app_odoo_customize.menu_app_group"
+                name="Customization"
+                parent="base.menu_administration"
+                sequence="1"
+                groups="base.group_system"/>
+    </data>
+</odoo>

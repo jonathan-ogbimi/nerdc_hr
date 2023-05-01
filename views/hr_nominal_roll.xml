@@ -1,0 +1,8 @@
+<odoo>
+    <report string="Nominal Roll" 
+        id="hr_nominal_roll_report_xls" 
+        model="hr.employee" 
+        report_type="xlsx" 
+        name="nerdc_hr.report_nominal_roll" 
+        file="Nominal Roll" />
+</odoo>

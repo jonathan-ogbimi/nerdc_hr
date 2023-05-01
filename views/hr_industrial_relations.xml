@@ -1,0 +1,87 @@
+<odoo>
+    <!-- Industrial Union Types-->
+    <record id="view_ir_union_type_tree" model="ir.ui.view">
+        <field name="name">Industrial Union Types</field>
+        <field name="model">hr.employee.ir.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                
+            </tree>
+        </field>
+    </record>
+    <record id="action_open_ir_union_type" model="ir.actions.act_window">
+        <field name="name">Union Types</field>
+        <field name="res_model">hr.employee.ir.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <!-- Industrial Unions-->
+    <record id="view_ir_union_tree" model="ir.ui.view">
+        <field name="name">Industrial Unions</field>
+        <field name="model">hr.employee.ir</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="type_id"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_open_ir_unions" model="ir.actions.act_window">
+        <field name="name">Industrial Unions</field>
+        <field name="res_model">hr.employee.ir</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <!-- Industrial Relations Form -->
+    <record id="view_employee_ir_line_form" model="ir.ui.view">
+        <field name="name">Employee Industrial Relations Line</field>
+        <field name="model">hr.employee.ir.line</field>
+        <field name="arch" type="xml">
+            <form class="o_form_document" delete="False">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="union_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="union_id"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="membership_number"/>
+                            <field name="employee_id" invisible="1" options="{'no_create': True,'no_edit':True}"/>
+                        </group>
+                        <group string="Financial Obligations">
+                            <field name="financial_obligation"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+     <record model="ir.ui.view" id="hr_employee_ir_inherit_form_view">
+        <field name="name">hr.employee.ir.form.view</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">400</field>
+        <field name="inherit_id" ref="hr_employee_updation.hr_employee_inherit_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page name="industrial_relations" string="Industrial Relations">
+                    <h1>
+                        <label for="union_line_ids" class="oe_edit_only"/>
+                    </h1>
+                    <field name="union_line_ids" string="Associated Industrial Unions" context="{'default_employee_id': id}">
+                        <tree string="Associated Industrial Unions">
+                            <field name="union_id" string="Union/Association" required="1"/>
+                            <field name="membership_number" required="1"/>
+                            <field name="financial_obligation" required="1"/>
+                            <field name="employee_id" invisible="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <menuitem id="menu_hr_ir_union_type" action="action_open_ir_union_type" parent="hr.menu_human_resources_configuration" sequence="13" groups="hr.group_hr_manager"/>
+    <menuitem id="menu_hr_ir_union" action="action_open_ir_unions" parent="hr.menu_human_resources_configuration" sequence="14" groups="hr.group_hr_manager"/>
+</odoo>

@@ -1,0 +1,122 @@
+<odoo>
+    <!-- HMO-->
+    <record id="view_hmo_tree" model="ir.ui.view">
+        <field name="name">HMO Tree</field>
+        <field name="model">hr.employee.hmo</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_open_hmo" model="ir.actions.act_window">
+        <field name="name">HMOs</field>
+        <field name="res_model">hr.employee.hmo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+      <record id="view_welfare_hmo_form" model="ir.ui.view">
+        <field name="name">Employee HMO Line</field>
+        <field name="model">hr.employee.hmo.line</field>
+        <field name="arch" type="xml">
+            <form class="o_form_document" delete="False">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="hmo_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="hmo_id"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Details">
+                            <field name="hmo_number"/>
+                            <field name="employee_id" invisible="1" options="{'no_create': True,'no_edit':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Welfare -->
+    <record id="view_welfare_type_tree" model="ir.ui.view">
+        <field name="name">Welfare Type Tree</field>
+        <field name="model">hr.employee.welfare.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_open_welfare_type" model="ir.actions.act_window">
+        <field name="name">Welfare Types</field>
+        <field name="res_model">hr.employee.welfare.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+    </record>
+    <record id="view_welfare_type_form" model="ir.ui.view">
+        <field name="name">Employee Welfare Line</field>
+        <field name="model">hr.employee.welfare.line</field>
+        <field name="arch" type="xml">
+            <form class="o_form_document" delete="False">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="type_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="type_id"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Package">
+                            <field name="amount"/>
+                            <field name="employee_id" invisible="1" options="{'no_create': True,'no_edit':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="hr_employee_welfare_inherit_form_view">
+        <field name="name">hr.employee.welfare.form.view</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">200</field>
+        <field name="inherit_id" ref="hr_employee_updation.hr_employee_inherit_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/notebook" position="inside">
+                <page name="welfare" string="Welfare/HMO">
+                    <h1>
+                        <label for="welfare_line_ids" class="oe_edit_only"/>
+                    </h1>
+                    <field name="welfare_line_ids" context="{'default_employee_id': id}">
+                        <tree>
+                            <field name="type_id" required="1"/>
+                            <field name="amount" required="1"/>
+                            <field name="employee_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    <separator/>
+                    <h1>
+                        <label for="hmo_line_ids" class="oe_edit_only"/>
+                    </h1>
+                     <field name="hmo_line_ids" string="Health Maintenance Organization" context="{'default_employee_id': id}">
+                        <tree string="Health Maintenance Organization">
+                            <field name="hmo_id" required="1"/>
+                            <field name="hmo_number" required="1"/>
+                            <field name="employee_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    <!--
+                    <field name="welfare_line_ids" context="{'default_employee_id': id}">
+                        <tree editable="bottom">
+                            <field name="type_id" required="1"/>
+                            <field name="amount" required="1"/>
+                            <field name="employee_id" invisible="1"/>
+                        </tree>
+                    </field>
+                    -->
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <menuitem id="menu_hr_welfare_type" action="action_open_welfare_type" parent="hr.menu_human_resources_configuration" sequence="13" groups="hr.group_hr_manager"/>
+     <menuitem id="menu_hr_hmo" action="action_open_hmo" parent="hr.menu_human_resources_configuration" sequence="14" groups="hr.group_hr_manager"/>
+</odoo>

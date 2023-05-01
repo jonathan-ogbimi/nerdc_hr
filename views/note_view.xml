@@ -1,0 +1,144 @@
+<odoo>
+    <data>
+        <record id="view_note_note_kanban_custom" model="ir.ui.view">
+            <field name="name">note.note.kanban.custom</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note.view_note_note_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="." position="replace">
+                    <kanban default_group_by="stage_id" class="oe_notes oe_kanban_quickcreate_textarea o_kanban_small_column">
+                        <field name="color"/>
+                        <field name="sequence"/>
+                        <field name="name"/>
+                        <field name="stage_id"/>
+                        <field name="open"/>
+                        <field name="memo"/>
+                        <field name="date_done"/>
+                        <field name="message_partner_ids"/>
+                        <field name="activity_ids" />
+                        <field name="activity_state" />
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click_edit oe_semantic_html_override oe_kanban_card">
+                                    <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                    <div class="o_dropdown_kanban dropdown">
+                                        <a role="button" class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <!--div class="dropdown-menu" role="menu">
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div-->
+                                    </div>
+                                    <span>
+                                        <a name="note.action_close" type="object" t-if="record.open.raw_value">
+                                            <i class="fa fa-check" role="img" aria-label="Opened" title="Opened"/>
+                                        </a>
+                                        <a name="note.action_open" type="object" t-if="!record.open.raw_value">
+                                            <i class="fa fa-undo" role="img" aria-label="Closed" title="Closed"/>
+                                        </a>
+                                    </span>
+                                    <!-- kanban note -->
+                                    <span t-attf-class="oe_kanban_content #{record.open.raw_value ? '' : 'note_text_line_through'}">
+                                        <!-- title -->
+                                        <field name="name"/>
+                                        <div class="oe_kanban_bottom_right">
+                                            <div class="o_kanban_inline_block mr4">
+                                                <field name="activity_ids" widget="kanban_activity" />
+                                            </div>
+                                        </div>
+                                    </span>
+                                    <t t-if="record.message_partner_ids.raw_value.length &gt; 1">
+                                        <div class="clearfix"></div>
+                                        <t t-foreach="record.message_partner_ids.raw_value" t-as="follower">
+                                            <img t-att-src="kanban_image('res.partner', 'image_small', follower)" width="24" height="24" class="oe_kanban_avatar float-right" t-att-data-member_id="follower" alt="Follower"/>
+                                        </t>
+                                        <div class="clearfix"></div>
+                                    </t>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_note_note_tree_custom" model="ir.ui.view">
+            <field name="name">note.note.tree.custom</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note.view_note_note_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="." position="replace">
+                    <tree string="Stages" delete="false">
+                        <field name="name"/>
+                        <field name="open"/>
+                        <field name="stage_id"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_note_note_form_inherited" model="ir.ui.view">
+            <field name="name">inherited.note.form</field>
+            <field name="model">note.note</field>
+            <field name="inherit_id" ref="note.view_note_note_form" />
+            <field name="arch" type="xml">
+                <xpath expr="." position="replace">
+                    <form string="Note" class="oe_form_nomargin o_note_form_view" delete="false" >
+                        <header>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
+                            <field name="stage_id" domain="[('user_id','=',uid)]" widget="statusbar" options="{'clickable': '1'}"/>
+                        </header>
+                        <sheet>
+                            <!--
+                                An object on create will not have an id. Afterwards, it will always have one.
+
+Taking advantage of this behaviour, the id can be used to set the readonly attribute.
+
+<field name="id" invisible="1"/>
+
+<field name="uneditable_field" attrs="{'readonly': [('id', '!=', False)]}"/>
+                             -->
+                            <field name="user_id" invisible="1"/>
+                            <field name="create_uid" invisible="0"/>
+                            <field name="memo" type="html" class="oe_memo"/>
+                            <!--
+                            <label for="digital_signature" string="Approval Signature" class="oe_edit_only" />
+                            <h2>
+                                <field name="digital_signature" widget="signature" />
+                            </h2>
+                            -->
+                        </sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+        <record id="note.action_note_note" model="ir.actions.act_window">
+            <field name="name">Internal Memos</field>
+            <field name="res_model">note.note</field>
+            <!--field name="view_type">form</field-->
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="search_view_id" ref="note.view_note_note_filter"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+            Add an Internal Memo
+          </p>
+                <p>
+            Memos are private, unless you share them by inviting a follower or channel on a memo.
+            (Useful for meeting minutes).
+          </p>
+            </field>
+        </record>
+        <menuitem
+      id="note.menu_note_notes"
+      name="Internal Memos"
+      sequence="3"
+      action="note.action_note_note"
+      web_icon="note,static/description/icon.png"/>
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <record id="expense_product_hotel" model="product.product">
+            <field name="name">Hotel Allowance</field>
+            <field name="type">service</field>
+            <field name="default_code">10001</field>
+            <field name="can_be_expensed">True</field>
+            <field name="list_price">1.00</field>
+            <field name="standard_price">10000</field>
+        </record>
+        <record id="welfare_type_creche" model="hr.employee.welfare.type">
+            <field name="name">Creche</field>
+        </record>
+        <record id="welfare_type_sport" model="hr.employee.welfare.type">
+            <field name="name">Sports</field>
+        </record>
+        <record id="welfare_type_sickbay" model="hr.employee.welfare.type">
+            <field name="name">Sickbay</field>
+        </record>
+        <record id="hmo_mansard" model="hr.employee.hmo">
+            <field name="name">Mansard Health HMO</field>
+        </record>
+        <record id="hmo_hygeia" model="hr.employee.hmo">
+            <field name="name">Hygeia HMO</field>
+        </record>
+        <record id="hmo_liberty" model="hr.employee.hmo">
+            <field name="name">Liberty Blue THT HMO</field>
+        </record>
+        <record id="hmo_multishield" model="hr.employee.hmo">
+            <field name="name">Multishield HMO</field>
+        </record>
+        <record id="hmo_avon" model="hr.employee.hmo">
+            <field name="name">Avon HMO</field>
+        </record>
+        <record id="hmo_redcare" model="hr.employee.hmo">
+            <field name="name">Redcare HMO</field>
+        </record>
+        <record id="hmo_premier" model="hr.employee.hmo">
+            <field name="name">Premier Medicaid HMO</field>
+        </record>
+        <record id="hmo_marina" model="hr.employee.hmo">
+            <field name="name">Marina Health HMO</field>
+        </record>
+        <!--PFA -->
+        <record id="pfa_arm" model="hr.employee.pfa">
+            <field name="name">ARM Pension Managers Limited</field>
+        </record>
+        <record id="pfa_crusader" model="hr.employee.pfa">
+            <field name="name">Crusader Sterling Pensions Limited</field>
+        </record>
+        <record id="pfa_fcmb" model="hr.employee.pfa">
+            <field name="name">FCMB Pensions Limited</field>
+        </record>
+        <record id="pfa_fidelity" model="hr.employee.pfa">
+            <field name="name">Fidelity Pension Managers Limited</field>
+        </record>
+        <record id="pfa_gt" model="hr.employee.pfa">
+            <field name="name">Guaranty Trust Pension Managers Limited</field>
+        </record>
+        <record id="pfa_leadway" model="hr.employee.pfa">
+            <field name="name">Leadway Pensure PFA Limited</field>
+        </record>
+        <record id="pfa_nupemco" model="hr.employee.pfa">
+            <field name="name">Nigerian University Pension Management Company (NUPEMCO)</field>
+        </record>
+        <record id="pfa_nlpc" model="hr.employee.pfa">
+            <field name="name">NLPC Pension Fund Administrators Limited</field>
+        </record>
+        <record id="pfa_apt" model="hr.employee.pfa">
+            <field name="name">Tangerine APT Pension Limited</field>
+        </record>
+        <record id="pfa_stanbic" model="hr.employee.pfa">
+            <field name="name">Stanbic IBTC Pension Managers Limited</field>
+        </record>
+        <record id="pfa_premium" model="hr.employee.pfa">
+            <field name="name">Premium Pension Limited</field>
+        </record>
+    </data>
+</openerp>
